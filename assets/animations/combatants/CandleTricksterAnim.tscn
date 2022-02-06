@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/animations/combatants/Anim.gd" type="Script" id=1]
+[ext_resource path="res://assets/textures/battle/enemies/candle_trickster.png" type="Texture" id=2]
+
+[node name="CandleTrickster" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -1.78814e-07, -107 )
+scale = Vector2( 0.62, 0.62 )
+texture = ExtResource( 2 )
+
+[node name="TargetPosition" type="Position2D" parent="."]
+position = Vector2( 0, -96 )
