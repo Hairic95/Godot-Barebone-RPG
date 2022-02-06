@@ -37,7 +37,7 @@ func _ready():
 	
 	# Create the enemy position references, delete the scene after retrieving the data
 	# (this function should be called externally)
-	var new_battle_data_scene = load("res://src/battle_data/battle_test_001.tscn").instance()
+	var new_battle_data_scene = load("res://src/battle_data/battle_test_002.tscn").instance()
 	add_child(new_battle_data_scene)
 	var enemy_data = new_battle_data_scene.get_battle_data()
 	new_battle_data_scene.queue_free()

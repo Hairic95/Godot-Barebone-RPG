@@ -15,17 +15,17 @@ texture = ExtResource( 2 )
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="EnemyPosition" parent="Enemies" instance=ExtResource( 3 )]
-position = Vector2( 786, 210 )
-enemy_code = "wax_slug"
+position = Vector2( 984, 216 )
+enemy_code = "candle_trickster"
 
 [node name="EnemyPosition2" parent="Enemies" instance=ExtResource( 3 )]
-position = Vector2( 826, 274 )
-enemy_code = "wax_slug"
+position = Vector2( 776, 248 )
+enemy_code = "candle_grunt"
 
 [node name="EnemyPosition3" parent="Enemies" instance=ExtResource( 3 )]
-position = Vector2( 866, 338 )
-enemy_code = "wax_slug"
+position = Vector2( 1024, 376 )
+enemy_code = "candle_priest"
 
 [node name="EnemyPosition4" parent="Enemies" instance=ExtResource( 3 )]
-position = Vector2( 914, 378 )
-enemy_code = "wax_slug"
+position = Vector2( 824, 384 )
+enemy_code = "candle_captain"
