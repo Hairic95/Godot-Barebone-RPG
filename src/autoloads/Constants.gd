@@ -25,7 +25,10 @@ const ActionTarget_AllyMultiple = "ally_multiple"
 const ActionTarget_Self = "self"
 
 # Effect Types
-const EffectType_Bleed = "bleed"
+const EffectType_Status = "status"
 const EffectType_Heal = "heal"
 
+# Status Types
+
+const StatusType_Bleed = "bleed"
 

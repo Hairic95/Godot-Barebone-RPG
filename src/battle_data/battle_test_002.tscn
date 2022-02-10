@@ -16,11 +16,11 @@ texture = ExtResource( 2 )
 
 [node name="EnemyPosition" parent="Enemies" instance=ExtResource( 3 )]
 position = Vector2( 984, 216 )
-enemy_code = "candle_trickster"
+enemy_code = "wax_slug"
 
 [node name="EnemyPosition2" parent="Enemies" instance=ExtResource( 3 )]
 position = Vector2( 776, 248 )
-enemy_code = "candle_grunt"
+enemy_code = "candle_captain"
 
 [node name="EnemyPosition3" parent="Enemies" instance=ExtResource( 3 )]
 position = Vector2( 1024, 376 )

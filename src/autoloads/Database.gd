@@ -8,7 +8,7 @@ const combatant_data = {
 		"speed": 4,
 		"protection": 20,
 		"max_hp": 32,
-		"actions": ["basic_attack", "basic_heal"],
+		"actions": ["basic_attack", "basic_heal", "basic_bleed"],
 		"animations": preload("res://assets/animations/combatants/KnightAnim.tscn")
 	},
 	"butcher": {
@@ -18,17 +18,17 @@ const combatant_data = {
 		"speed": 2,
 		"protection": 5,
 		"max_hp": 36,
-		"actions": ["basic_attack"],
+		"actions": ["basic_attack", "basic_bleed"],
 		"animations": preload("res://assets/animations/combatants/ButcherAnim.tscn")
 	},
 	"wax_slug": {
 		"name": "Wax Slug",
 		"min_attack": 4,
 		"max_attack": 6,
-		"speed": 4,
+		"speed": 1,
 		"protection": 65,
 		"max_hp": 8,
-		"actions": ["basic_attack"],
+		"actions": ["basic_attack", "basic_bleed"],
 		"animations": preload("res://assets/animations/combatants/WaxSlugAnim.tscn")
 	},
 	"candle_priest": {
@@ -85,6 +85,19 @@ const action_data = {
 		"effects": [{
 			"type": Constants.EffectType_Heal,
 			"amount": 10
+		}]
+	},
+	"basic_bleed": {
+		"name": "Basic Bleed",
+		"damage_percentage": 65,
+		"target": Constants.ActionTarget_EnemySingle,
+		"effects": [{
+			"name": "Bleed",
+			"type": Constants.EffectType_Status,
+			"status": Constants.StatusType_Bleed,
+			"amount": 3,
+			"turn_duration": 3,
+			"icon": preload("res://icon.png")
 		}]
 	}
 }

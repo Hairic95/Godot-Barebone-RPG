@@ -1,5 +1,7 @@
 extends Control
 
+var status_icon_reference = load("res://src/ui/StatusIcon.tscn")
+
 var combatant = null
 
 func _ready():
@@ -25,3 +27,27 @@ func _on_TextureProgress_value_changed(_value):
 
 func set_hp_display(current_hp, max_hp):
 	$HPCount.text = str(current_hp, "/", max_hp)
+
+func change_status():
+	# TODO Remove this: momentary fix
+	for child in $StatusList.get_children():
+		child.queue_free()
+	
+	for status in combatant.get_status():
+		# Remove status if duration is over
+		if status.turn_duration == 0:
+			for child in $StatusList.get_children():
+				if child.status_type == status.status_type:
+					child.queue_free()
+					continue
+		
+		
+		var new_status_icon = status_icon_reference.instance()
+		new_status_icon.init(status)
+		$StatusList.add_child(new_status_icon)
+
+func has_status_icon(status):
+	for child in $StatusList.get_children():
+		if child.status_type == status.status_type:
+			return true
+	return false

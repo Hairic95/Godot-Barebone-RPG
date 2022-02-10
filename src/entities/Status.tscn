@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/entities/Status.gd" type="Script" id=1]
+
+[node name="Status" type="Node"]
+script = ExtResource( 1 )

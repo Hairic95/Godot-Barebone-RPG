@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/scenes/BattleScene.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Pixellari.ttf" type="DynamicFontData" id=2]
@@ -17,14 +17,11 @@ outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFontData" id=7]
-font_path = "res://assets/fonts/Scribbles-Regular.ttf"
-
 [sub_resource type="DynamicFont" id=4]
 size = 28
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 7 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="Theme" id=5]
 default_font = SubResource( 4 )
@@ -133,10 +130,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -528.0
-margin_top = -232.0
-margin_right = -304.0
-margin_bottom = -40.0
+margin_left = -512.0
+margin_top = -200.0
+margin_right = -288.0
+margin_bottom = -8.0
 theme = SubResource( 5 )
 __meta__ = {
 "_edit_group_": true
@@ -258,9 +255,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -96.0
+margin_left = -600.0
 margin_top = -118.0
-margin_right = 96.0
+margin_right = 600.0
 margin_bottom = -64.0
 custom_fonts/font = SubResource( 6 )
 text = "Turn: 0"

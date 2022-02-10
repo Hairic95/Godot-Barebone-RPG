@@ -37,7 +37,7 @@ func _ready():
 	
 	# Create the enemy position references, delete the scene after retrieving the data
 	# (this function should be called externally)
-	var new_battle_data_scene = load("res://src/battle_data/battle_test_002.tscn").instance()
+	var new_battle_data_scene = load("res://src/battle_data/battle_test_001.tscn").instance()
 	add_child(new_battle_data_scene)
 	var enemy_data = new_battle_data_scene.get_battle_data()
 	new_battle_data_scene.queue_free()
@@ -101,6 +101,7 @@ func prepare_battle(player_team, enemy_team):
 		var new_health_bar = health_bar_reference.instance()
 		new_health_bar.init(new_combatant)
 		new_combatant.connect("combatant_hp_changed", self, "combatant_hp_changed", [new_health_bar])
+		new_combatant.connect("status_changed", self, "status_changed", [new_health_bar])
 		$UI/PlayerHealthBars.add_child(new_health_bar)
 		
 		combatant_position_id += 1
@@ -117,6 +118,7 @@ func prepare_battle(player_team, enemy_team):
 		var new_health_bar = health_bar_reference.instance()
 		new_health_bar.init(new_combatant)
 		new_combatant.connect("combatant_hp_changed", self, "combatant_hp_changed", [new_health_bar])
+		new_combatant.connect("status_changed", self, "status_changed", [new_health_bar])
 		$UI/EnemyHealthBars.add_child(new_health_bar)
 	
 	# Give the combatants references to the two players
@@ -205,6 +207,20 @@ func go_to_next_combatant():
 		
 		# show that combatant initiative hint
 		current_combatant.set_current_hint(true)
+		
+		# Check status and apply them
+		for status in current_combatant.get_status():
+			status.apply_status(current_combatant)
+			yield(get_tree().create_timer(1.2), "timeout")
+			# if the combatant has been freed or has been ko between a status, pass the turn
+			if !weakref(current_combatant).get_ref() || current_combatant.is_ko():
+				go_to_next_combatant()
+				return
+		
+		# if the combatant has been freed or has been ko after the status, pass the turn
+		if !weakref(current_combatant).get_ref() || current_combatant.is_ko():
+			go_to_next_combatant()
+			return
 		
 		if current_combatant.player_id == player.id:
 			# if it's a player combatant, show the ui
@@ -385,6 +401,10 @@ func focus_target_hover(current_target):
 func combatant_hp_changed(current_hp, max_hp, health_bar):
 	health_bar.update_hp(current_hp, max_hp)
 	health_bar.set_hp_display(current_hp, max_hp)
+
+# Add or update a status icon on a health bar
+func status_changed(health_bar):
+	health_bar.change_status()
 
 # Removes a healthbar after the relative combatant has been ko-ed
 func remove_combatant_ui(combatant):

@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/ui/StatusIcon.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/Pixellari.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 12
+font_data = ExtResource( 2 )
+
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
+
+[node name="StatusIcon" type="TextureRect"]
+margin_right = 48.0
+margin_bottom = 40.0
+theme = SubResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="mouse_entered" from="." to="." method="_on_StatusIcon_mouse_entered"]

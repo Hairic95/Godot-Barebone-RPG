@@ -1,6 +1,7 @@
 extends Node2D
 
 var action_reference = load("res://src/entities/Action.tscn")
+var status_reference = load("res://src/entities/Status.tscn")
 
 var combatant_name = "Missing string"
 
@@ -21,6 +22,7 @@ var current_status = []
 var fixed_position = Vector2.ZERO
 
 signal combatant_hp_changed()
+signal status_changed()
 
 func _ready():
 	randomize()
@@ -55,6 +57,9 @@ func get_initiative():
 func get_actions():
 	return $Actions.get_children()
 
+func get_status():
+	return $Status.get_children()
+
 func is_ko():
 	return current_hp <= 0
 
@@ -84,6 +89,13 @@ func heal_hp(amount):
 		EventBus.emit_signal("combatant_revived", self)
 	EventBus.emit_signal("create_damage_label", amount, global_position + Vector2(0, -20), Color("2cb744"))
 	emit_signal("combatant_hp_changed", current_hp, max_hp)
+
+func add_status(status_name, status_type, amount, turn_duration, icon):
+	var new_status = status_reference.instance()
+	new_status.init(status_name, status_type, amount, turn_duration, icon)
+	$Status.add_child(new_status)
+	
+	emit_signal("status_changed")
 
 func die():
 	EventBus.emit_signal("remove_combatant_from_queue", self)
