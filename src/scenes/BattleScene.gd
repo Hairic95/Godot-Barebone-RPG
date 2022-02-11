@@ -37,7 +37,7 @@ func _ready():
 	
 	# Create the enemy position references, delete the scene after retrieving the data
 	# (this function should be called externally)
-	var new_battle_data_scene = load("res://src/battle_data/battle_test_001.tscn").instance()
+	var new_battle_data_scene = load("res://src/battle_data/battle_test_003.tscn").instance()
 	add_child(new_battle_data_scene)
 	var enemy_data = new_battle_data_scene.get_battle_data()
 	new_battle_data_scene.queue_free()
@@ -51,7 +51,7 @@ func _ready():
 			"current_hp": null
 		}, {
 			"id": "butcher",
-			"current_hp": 12
+			"current_hp": null
 		}, {
 			"id": "knight",
 			"current_hp": null
@@ -208,19 +208,25 @@ func go_to_next_combatant():
 		# show that combatant initiative hint
 		current_combatant.set_current_hint(true)
 		
-		# Check status and apply them
+		# Check DoT status and apply them
+		var totalDOTDamage = 0
 		for status in current_combatant.get_status():
-			status.apply_status(current_combatant)
-			yield(get_tree().create_timer(1.2), "timeout")
+			if status.status_type == Constants.StatusType_Bleed:
+				totalDOTDamage += status.amount
+				status.apply_status(current_combatant)
+			if status.status_type == Constants.StatusType_Poison:
+				totalDOTDamage += status.amount
+				status.apply_status(current_combatant)
+		
+		if totalDOTDamage != 0:
+			current_combatant.inflict_damage(totalDOTDamage)
 			# if the combatant has been freed or has been ko between a status, pass the turn
 			if !weakref(current_combatant).get_ref() || current_combatant.is_ko():
 				go_to_next_combatant()
 				return
+			yield(get_tree().create_timer(1.2), "timeout")
+			current_combatant.emit_signal("status_changed")
 		
-		# if the combatant has been freed or has been ko after the status, pass the turn
-		if !weakref(current_combatant).get_ref() || current_combatant.is_ko():
-			go_to_next_combatant()
-			return
 		
 		if current_combatant.player_id == player.id:
 			# if it's a player combatant, show the ui
@@ -305,6 +311,8 @@ func execute_action(acting_combatant, action, targets):
 	# Check if the battle is over, otherwise go to the next combatant
 	if !is_battle_over():
 		go_to_next_combatant()
+	
+	yield(get_tree().create_timer(1.2), "timeout")
 
 # Removes a Ko-ed combatant
 func remove_combatant_from_queue(combatant):

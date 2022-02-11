@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/battle_data/BattleData.gd" type="Script" id=1]
+[ext_resource path="res://assets/background/bg_crypt_001.png" type="Texture" id=2]
+[ext_resource path="res://src/battle_data/EnemyPosition.tscn" type="PackedScene" id=3]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="bg_crypt_001" type="Sprite" parent="."]
+position = Vector2( 600, 232 )
+scale = Vector2( 0.62, 0.62 )
+texture = ExtResource( 2 )
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="EnemyPosition" parent="Enemies" instance=ExtResource( 3 )]
+position = Vector2( 768, 248 )
+enemy_code = "wax_slug"

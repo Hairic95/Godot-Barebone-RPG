@@ -31,4 +31,5 @@ const EffectType_Heal = "heal"
 # Status Types
 
 const StatusType_Bleed = "bleed"
+const StatusType_Poison = "poison"
 

@@ -7,7 +7,7 @@ const combatant_data = {
 		"max_attack": 10,
 		"speed": 4,
 		"protection": 20,
-		"max_hp": 32,
+		"max_hp": 132,
 		"actions": ["basic_attack", "basic_heal", "basic_bleed"],
 		"animations": preload("res://assets/animations/combatants/KnightAnim.tscn")
 	},
@@ -17,7 +17,7 @@ const combatant_data = {
 		"max_attack": 11,
 		"speed": 2,
 		"protection": 5,
-		"max_hp": 36,
+		"max_hp": 136,
 		"actions": ["basic_attack", "basic_bleed"],
 		"animations": preload("res://assets/animations/combatants/ButcherAnim.tscn")
 	},
@@ -27,7 +27,7 @@ const combatant_data = {
 		"max_attack": 6,
 		"speed": 1,
 		"protection": 65,
-		"max_hp": 8,
+		"max_hp": 108,
 		"actions": ["basic_attack", "basic_bleed"],
 		"animations": preload("res://assets/animations/combatants/WaxSlugAnim.tscn")
 	},

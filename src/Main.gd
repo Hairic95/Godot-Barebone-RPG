@@ -7,7 +7,6 @@ var scenes = {
 func _ready():
 	_load_scene("battle_scene")
 
-
 func _load_scene(new_scene_key):
 	if scenes.has(new_scene_key):
 		for scene in $CurrentScene.get_children():

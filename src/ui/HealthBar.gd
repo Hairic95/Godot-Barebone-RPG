@@ -32,22 +32,20 @@ func change_status():
 	# TODO Remove this: momentary fix
 	for child in $StatusList.get_children():
 		child.queue_free()
+	yield(get_tree().create_timer(.01), "timeout")
 	
+	print(combatant.get_status())
 	for status in combatant.get_status():
+		
 		# Remove status if duration is over
 		if status.turn_duration == 0:
-			for child in $StatusList.get_children():
-				if child.status_type == status.status_type:
-					child.queue_free()
-					continue
-		
-		
+			continue
 		var new_status_icon = status_icon_reference.instance()
-		new_status_icon.init(status)
+		new_status_icon.init(status.get_description(), status.icon_texture)
 		$StatusList.add_child(new_status_icon)
 
-func has_status_icon(status):
+func get_status_icon(status):
 	for child in $StatusList.get_children():
 		if child.status_type == status.status_type:
-			return true
-	return false
+			return child
+	return null

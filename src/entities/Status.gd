@@ -17,16 +17,13 @@ func init(status_name, status_type, amount, turn_duration, icon_texture):
 
 func apply_status(target):
 	
-	match(status_type):
-		Constants.StatusType_Bleed:
-			target.inflict_damage(amount)
-	
-	
 	turn_duration -= 1
-	target.emit_signal("change_status", self)
-	if turn_duration < 0:
+	
+	if turn_duration <= 0:
 		queue_free()
-		target.emit_signal("remove_status", self)
 
 func get_description():
-	return "Missing String"
+	if turn_duration != 1:
+		return str(status_name, " ", amount, " (", turn_duration, " turns)")
+	else:
+		return str(status_name, " ", amount, " (", turn_duration, " turn)")
