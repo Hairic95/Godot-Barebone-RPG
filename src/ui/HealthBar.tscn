@@ -15,8 +15,8 @@ default_font = SubResource( 1 )
 
 [node name="HealthBar" type="Control"]
 margin_right = 288.0
-margin_bottom = 36.0
-rect_min_size = Vector2( 288, 36 )
+margin_bottom = 72.0
+rect_min_size = Vector2( 288, 72 )
 theme = SubResource( 2 )
 script = ExtResource( 4 )
 __meta__ = {
@@ -59,10 +59,29 @@ __meta__ = {
 
 [node name="Tween" type="Tween" parent="."]
 
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+margin_left = 8.0
+margin_top = 40.0
+margin_right = 279.0
+margin_bottom = 69.0
+texture = ExtResource( 2 )
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="StatusList" type="HBoxContainer" parent="."]
-margin_left = 16.0
-margin_top = 24.0
-margin_right = 272.0
-margin_bottom = 48.0
+margin_left = 12.0
+margin_top = 44.0
+margin_right = 276.0
+margin_bottom = 66.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="value_changed" from="TextureProgress" to="." method="_on_TextureProgress_value_changed"]

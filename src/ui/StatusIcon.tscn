@@ -11,9 +11,10 @@ font_data = ExtResource( 2 )
 default_font = SubResource( 1 )
 
 [node name="StatusIcon" type="TextureRect"]
-margin_right = 48.0
-margin_bottom = 40.0
+margin_right = 22.0
+margin_bottom = 22.0
 theme = SubResource( 2 )
+stretch_mode = 1
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false

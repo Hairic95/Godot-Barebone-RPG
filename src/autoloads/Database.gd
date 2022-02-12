@@ -8,7 +8,7 @@ const combatant_data = {
 		"speed": 4,
 		"protection": 20,
 		"max_hp": 132,
-		"actions": ["basic_attack", "basic_heal", "basic_bleed"],
+		"actions": ["basic_attack", "basic_heal", "basic_bleed", "basic_poison"],
 		"animations": preload("res://assets/animations/combatants/KnightAnim.tscn")
 	},
 	"butcher": {
@@ -18,7 +18,7 @@ const combatant_data = {
 		"speed": 2,
 		"protection": 5,
 		"max_hp": 136,
-		"actions": ["basic_attack", "basic_bleed"],
+		"actions": ["basic_attack", "basic_bleed", "basic_poison"],
 		"animations": preload("res://assets/animations/combatants/ButcherAnim.tscn")
 	},
 	"wax_slug": {
@@ -97,7 +97,20 @@ const action_data = {
 			"status": Constants.StatusType_Bleed,
 			"amount": 3,
 			"turn_duration": 3,
-			"icon": preload("res://icon.png")
+			"icon": preload("res://assets/ui/status_icons/bleed.png")
+		}]
+	},
+	"basic_poison": {
+		"name": "Basic Poison",
+		"damage_percentage": 25,
+		"target": Constants.ActionTarget_EnemySingle,
+		"effects": [{
+			"name": "Bleed",
+			"type": Constants.EffectType_Status,
+			"status": Constants.StatusType_Poison,
+			"amount": 4,
+			"turn_duration": 2,
+			"icon": preload("res://assets/ui/status_icons/poison.png")
 		}]
 	}
 }

@@ -34,7 +34,6 @@ func change_status():
 		child.queue_free()
 	yield(get_tree().create_timer(.01), "timeout")
 	
-	print(combatant.get_status())
 	for status in combatant.get_status():
 		
 		# Remove status if duration is over
