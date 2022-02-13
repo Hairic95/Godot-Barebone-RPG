@@ -4,8 +4,8 @@ export (Texture) var normal_texture
 export (Texture) var hover_texture
 
 signal pressed()
-signal mouse_enter()
-signal mouse_exit()
+signal mouse_entered()
+signal mouse_exited()
 
 
 var is_multiple = false
@@ -19,11 +19,10 @@ func _on_TextureButton_pressed():
 	emit_signal("pressed")
 
 func _on_TextureButton_mouse_entered():
-	emit_signal("mouse_enter")
-	set_hover_sprite(true)
+	emit_signal("mouse_entered")
 
 func _on_TextureButton_mouse_exited():
-	emit_signal("mouse_exit")
+	emit_signal("mouse_exited")
 
 func set_hover_sprite(value):
 	if value:

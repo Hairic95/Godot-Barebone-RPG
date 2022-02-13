@@ -39,15 +39,15 @@ func choose_action(current_combatant):
 	# Check all the available targets
 	var possible_targets = []
 	match chosen_action.target:
-		"ally_single", "ally_all":
+		Constants.ActionTarget_AllySingle, Constants.ActionTarget_AllyMultiple:
 			for c in combatants:
 				if !c.is_ko():
 					possible_targets.append(c)
-		"enemy_single", "enemy_all":
+		Constants.ActionTarget_EnemySingle, Constants.ActionTarget_EnemyMultiple:
 			for c in opponent_combatants:
 				if !c.is_ko():
 					possible_targets.append(c)
-		"self":
+		Constants.ActionTarget_Self:
 			possible_targets.append(current_combatant)
 	
 	# Show the action text

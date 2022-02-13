@@ -83,10 +83,12 @@ func inflict_damage(damage):
 	emit_signal("combatant_hp_changed", current_hp, max_hp)
 
 func heal_hp(amount):
+	var was_ko = current_hp <= 0
 	current_hp = min(max_hp, current_hp + amount)
 	if current_hp > 0:
 		toggle_ko_sprite(false)
-		EventBus.emit_signal("combatant_revived", self)
+		if was_ko:
+			EventBus.emit_signal("combatant_revived", self)
 	EventBus.emit_signal("create_damage_label", amount, global_position + Vector2(0, -20), Color("2cb744"))
 	emit_signal("combatant_hp_changed", current_hp, max_hp)
 
@@ -95,6 +97,12 @@ func add_status(status_name, status_type, amount, turn_duration, icon):
 	new_status.init(status_name, status_type, amount, turn_duration, icon)
 	$Status.add_child(new_status)
 	
+	emit_signal("status_changed")
+
+func clear_status(status_type):
+	for status in $Status.get_children():
+		if status.status_type == status_type:
+			status.queue_free()
 	emit_signal("status_changed")
 
 func die():

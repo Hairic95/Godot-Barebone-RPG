@@ -7,6 +7,8 @@ var combatant_reference = load("res://src/entities/Combatant.tscn")
 
 var enemy_target_button_reference = load("res://src/ui/EnemyTargetButton.tscn")
 var ally_target_button_reference = load("res://src/ui/AllyTargetButton.tscn")
+var multi_enemy_target_button_reference = load("res://src/ui/EnemyMultiTargetButton.tscn")
+var multi_ally_target_button_reference = load("res://src/ui/AllyMultiTargetButton.tscn")
 var health_bar_reference = load("res://src/ui/HealthBar.tscn")
 
 var damage_label_reference = load("res://src/effects/DamageLabel.tscn")
@@ -37,7 +39,7 @@ func _ready():
 	
 	# Create the enemy position references, delete the scene after retrieving the data
 	# (this function should be called externally)
-	var new_battle_data_scene = load("res://src/battle_data/battle_test_003.tscn").instance()
+	var new_battle_data_scene = load("res://src/battle_data/battle_test_001.tscn").instance()
 	add_child(new_battle_data_scene)
 	var enemy_data = new_battle_data_scene.get_battle_data()
 	new_battle_data_scene.queue_free()
@@ -279,6 +281,28 @@ func show_action_targets(acting_combatant, action):
 					new_target.connect("mouse_enter", self, "focus_target_hover", [new_target])
 					new_target.global_position = combatant.get_target_position()
 					$UI/Targets.add_child(new_target)
+		Constants.ActionTarget_EnemyMultiple:
+			var targets_positions = []
+			var targets = []
+			for combatant in $Combatants/Ysort.get_children():
+				if combatant.player_id != acting_combatant.player_id:
+					targets_positions.append(combatant.global_position)
+					targets.append(combatant)
+			var new_multi_target_button = multi_enemy_target_button_reference.instance()
+			new_multi_target_button.init(targets_positions)
+			new_multi_target_button.connect("pressed", self, "execute_action", [acting_combatant, action, targets])
+			$UI/Targets.add_child(new_multi_target_button)
+		Constants.ActionTarget_AllyMultiple:
+			var targets_positions = []
+			var targets = []
+			for combatant in $Combatants/Ysort.get_children():
+				if combatant.player_id == acting_combatant.player_id:
+					targets_positions.append(combatant.global_position)
+					targets.append(combatant)
+			var new_multi_target_button = multi_ally_target_button_reference.instance()
+			new_multi_target_button.init(targets_positions)
+			new_multi_target_button.connect("pressed", self, "execute_action", [acting_combatant, action, targets])
+			$UI/Targets.add_child(new_multi_target_button)
 
 # Executes an action over an array of targets
 func execute_action(acting_combatant, action, targets):
@@ -312,9 +336,9 @@ func execute_action(acting_combatant, action, targets):
 	
 	# Check if the battle is over, otherwise go to the next combatant
 	if !is_battle_over():
+		yield(get_tree().create_timer(1.2), "timeout")
 		go_to_next_combatant()
 	
-	yield(get_tree().create_timer(1.2), "timeout")
 
 # Removes a Ko-ed combatant
 func remove_combatant_from_queue(combatant):

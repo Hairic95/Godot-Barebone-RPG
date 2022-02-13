@@ -27,6 +27,8 @@ const ActionTarget_Self = "self"
 # Effect Types
 const EffectType_Status = "status"
 const EffectType_Heal = "heal"
+const EffectType_ClearBleed = "clear_bleed"
+const EffectType_ClearPoison = "clear_poison"
 
 # Status Types
 

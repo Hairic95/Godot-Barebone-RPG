@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/ui/MultiTargetButton.gd" type="Script" id=1]
+[ext_resource path="res://src/ui/EnemyTargetButton.tscn" type="PackedScene" id=2]
+
+[node name="EnemyMultiTargetButton" type="Node2D"]
+script = ExtResource( 1 )
+target_button_reference = ExtResource( 2 )

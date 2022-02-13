@@ -8,7 +8,7 @@ const combatant_data = {
 		"speed": 4,
 		"protection": 20,
 		"max_hp": 132,
-		"actions": ["basic_attack", "basic_heal", "basic_bleed", "basic_poison"],
+		"actions": ["basic_attack", "basic_heal", "basic_bleed", "basic_poison", "basic_group_heal", "clear_dot"],
 		"animations": preload("res://assets/animations/combatants/KnightAnim.tscn")
 	},
 	"butcher": {
@@ -18,7 +18,7 @@ const combatant_data = {
 		"speed": 2,
 		"protection": 5,
 		"max_hp": 136,
-		"actions": ["basic_attack", "basic_bleed", "basic_poison"],
+		"actions": ["basic_attack", "basic_bleed", "basic_poison", "basic_area_attack"],
 		"animations": preload("res://assets/animations/combatants/ButcherAnim.tscn")
 	},
 	"wax_slug": {
@@ -28,7 +28,7 @@ const combatant_data = {
 		"speed": 1,
 		"protection": 65,
 		"max_hp": 108,
-		"actions": ["basic_attack", "basic_bleed"],
+		"actions": ["basic_group_heal", "basic_bleed"],
 		"animations": preload("res://assets/animations/combatants/WaxSlugAnim.tscn")
 	},
 	"candle_priest": {
@@ -84,7 +84,15 @@ const action_data = {
 		"target": Constants.ActionTarget_AllySingle,
 		"effects": [{
 			"type": Constants.EffectType_Heal,
-			"amount": 10
+			"amount": 15
+		}]
+	},
+	"basic_group_heal": {
+		"name": "Basic Group Heal",
+		"target": Constants.ActionTarget_AllyMultiple,
+		"effects": [{
+			"type": Constants.EffectType_Heal,
+			"amount": 7
 		}]
 	},
 	"basic_bleed": {
@@ -112,5 +120,19 @@ const action_data = {
 			"turn_duration": 2,
 			"icon": preload("res://assets/ui/status_icons/poison.png")
 		}]
+	},
+	"clear_dot": {
+		"name": "Clear DoT",
+		"target": Constants.ActionTarget_AllySingle,
+		"effects": [{
+			"type": Constants.EffectType_ClearBleed,
+		}, {
+			"type": Constants.EffectType_ClearPoison,
+		}]
+	},
+	"basic_area_attack": {
+		"name": "Basic Area Attack",
+		"damage_percentage": 70,
+		"target": Constants.ActionTarget_EnemyMultiple
 	}
 }

@@ -35,3 +35,7 @@ func apply_to_target(target):
 			target.heal_hp(amount)
 		Constants.EffectType_Status:
 			target.add_status(effect_name, status_type, amount, turn_duration, icon_texture)
+		Constants.EffectType_ClearBleed:
+			target.clear_status(Constants.StatusType_Bleed)
+		Constants.EffectType_ClearPoison:
+			target.clear_status(Constants.StatusType_Poison)
