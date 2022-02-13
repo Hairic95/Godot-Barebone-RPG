@@ -48,12 +48,15 @@ func _ready():
 		"id": Constants.PlayerId_Player,
 		"combatants": [{
 			"id": "knight",
+			"position": $PlayerCombatantPositions/Pos1.global_position,
 			"current_hp": null
 		}, {
 			"id": "butcher",
+			"position": $PlayerCombatantPositions/Pos2.global_position,
 			"current_hp": null
 		}, {
 			"id": "knight",
+			"position": $PlayerCombatantPositions/Pos3.global_position,
 			"current_hp": null
 		}],
 		"type": Constants.PlayerType.Player
@@ -70,7 +73,7 @@ func _ready():
 # DATA STRUCTURE
 # var player_team = {
 # "id": "player",
-# "combatants": [{"id": "butcher", "lvl": 1, "current_hp": 30}],
+# "combatants": [{"id": "butcher", "position": Vector2(100, 100), "current_hp": 30}],
 # "type": Constants.PlayerType.Player
 # }
 #
@@ -93,8 +96,7 @@ func prepare_battle(player_team, enemy_team):
 	var combatant_position_id = 1
 	var player_combatants = []
 	for combatant in player_team.combatants:
-		var combatant_position = get_node(str("PlayerCombatantPositions/Pos", combatant_position_id))
-		var new_combatant = create_combatant(combatant.id, combatant_position.global_position, combatant.current_hp)
+		var new_combatant = create_combatant(combatant.id, combatant.position, combatant.current_hp)
 		new_combatant.player_id = player_team.id
 		player_combatants.append(new_combatant)
 		# HealthBar
