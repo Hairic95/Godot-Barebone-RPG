@@ -18,7 +18,7 @@ const combatant_data = {
 		"speed": 2,
 		"protection": 5,
 		"max_hp": 136,
-		"actions": ["basic_attack", "basic_bleed", "basic_poison", "basic_area_attack"],
+		"actions": ["basic_attack", "basic_bleed", "mega_bleed", "basic_poison", "basic_area_attack"],
 		"animations": preload("res://assets/animations/combatants/ButcherAnim.tscn")
 	},
 	"wax_slug": {
@@ -26,7 +26,7 @@ const combatant_data = {
 		"min_attack": 4,
 		"max_attack": 6,
 		"speed": 1,
-		"protection": 65,
+		"protection": 45,
 		"max_hp": 108,
 		"actions": ["basic_group_heal", "basic_bleed"],
 		"animations": preload("res://assets/animations/combatants/WaxSlugAnim.tscn")
@@ -108,6 +108,27 @@ const action_data = {
 			"icon": preload("res://assets/ui/status_icons/bleed.png")
 		}]
 	},
+	"mega_bleed": {
+		"name": "Mega Bleed",
+		"damage_percentage": 125,
+		"target": Constants.ActionTarget_EnemySingle,
+		"effects": [{
+			"name": "Bleed",
+			"type": Constants.EffectType_Status,
+			"status": Constants.StatusType_Bleed,
+			"amount": 4,
+			"turn_duration": 3,
+			"icon": preload("res://assets/ui/status_icons/bleed.png")
+		}],
+		"self_effects": [{
+			"name": "Bleed",
+			"type": Constants.EffectType_Status,
+			"status": Constants.StatusType_Bleed,
+			"amount": 6,
+			"turn_duration": 3,
+			"icon": preload("res://assets/ui/status_icons/bleed.png")
+		}]
+	},
 	"basic_poison": {
 		"name": "Basic Poison",
 		"damage_percentage": 25,
@@ -125,9 +146,11 @@ const action_data = {
 		"name": "Clear DoT",
 		"target": Constants.ActionTarget_AllySingle,
 		"effects": [{
-			"type": Constants.EffectType_ClearBleed,
+			"type": Constants.EffectType_ClearStatus,
+			"status": Constants.StatusType_Bleed
 		}, {
-			"type": Constants.EffectType_ClearPoison,
+			"type": Constants.EffectType_ClearStatus,
+			"status": Constants.StatusType_Poison
 		}]
 	},
 	"basic_area_attack": {

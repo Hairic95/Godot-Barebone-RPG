@@ -267,8 +267,8 @@ func show_action_targets(acting_combatant, action):
 				if combatant.player_id != acting_combatant.player_id:
 					var new_target = enemy_target_button_reference.instance()
 					new_target.connect("pressed", self, "execute_action", [acting_combatant, action, [combatant]])
-					new_target.connect("mouse_enter", self, "update_target_info", [combatant])
-					new_target.connect("mouse_enter", self, "focus_target_hover", [new_target])
+					new_target.connect("mouse_entered", self, "update_target_info", [combatant])
+					new_target.connect("mouse_entered", self, "focus_target_hover", [new_target])
 					new_target.global_position = combatant.get_target_position()
 					$UI/Targets.add_child(new_target)
 		# if its a ally targetting action, show the targets on the players combatants
@@ -277,8 +277,8 @@ func show_action_targets(acting_combatant, action):
 				if combatant.player_id == acting_combatant.player_id:
 					var new_target = ally_target_button_reference.instance()
 					new_target.connect("pressed", self, "execute_action", [acting_combatant, action, [combatant]])
-					new_target.connect("mouse_enter", self, "update_target_info", [combatant])
-					new_target.connect("mouse_enter", self, "focus_target_hover", [new_target])
+					new_target.connect("mouse_entered", self, "update_target_info", [combatant])
+					new_target.connect("mouse_entered", self, "focus_target_hover", [new_target])
 					new_target.global_position = combatant.get_target_position()
 					$UI/Targets.add_child(new_target)
 		Constants.ActionTarget_EnemyMultiple:
@@ -323,8 +323,8 @@ func execute_action(acting_combatant, action, targets):
 	for target in targets:
 		# if the action has damage, deal it to all the targets
 		if action.damage_percentage != null:
-			var flat_damage = randi()%(acting_combatant.max_attack - acting_combatant.min_attack) + acting_combatant.min_attack
-			var action_damage = int(float(flat_damage) * float(action.damage_percentage) / 100.0 * float(100.0 - target.protection) / 100.0)
+			var flat_damage = acting_combatant.roll_attack_damage()
+			var action_damage = int(float(flat_damage) * float(action.damage_percentage) / 100.0 * float(100.0 - target.get_protection()) / 100.0)
 			
 			create_effect(target.global_position, load("res://src/effects/HitEffect001.tscn"))
 			
@@ -333,6 +333,8 @@ func execute_action(acting_combatant, action, targets):
 		# if the action has effects, apply them to all the targets
 		for effect in action.get_effects():
 			effect.apply_to_target(target)
+		for effect in action.get_self_effects():
+			effect.apply_to_target(acting_combatant)
 	
 	# Check if the battle is over, otherwise go to the next combatant
 	if !is_battle_over():

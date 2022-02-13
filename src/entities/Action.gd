@@ -6,8 +6,6 @@ var action_name = "Missing string"
 var action_type = "physical"
 var damage_percentage
 var target = "enemy_single"
-var effects = []
-var self_effects = []
 
 var max_uses
 var current_uses
@@ -35,6 +33,13 @@ func init(data):
 			var new_effect = effect_reference.instance()
 			new_effect.init(effect)
 			$Effects.add_child(new_effect)
+	
+	# If the action has any effects, instanciate them
+	if (data.has("self_effects")):
+		for effect in data.self_effects:
+			var new_effect = effect_reference.instance()
+			new_effect.init(effect)
+			$SelfEffects.add_child(new_effect)
 
 func has_max_uses():
 	return max_uses > 0

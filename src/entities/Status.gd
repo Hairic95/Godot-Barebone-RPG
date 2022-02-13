@@ -3,7 +3,7 @@ extends Node
 var status_name = "Missing String"
 var status_type = ""
 
-var amount = 0
+var amount = null
 var turn_duration = 1
 
 var icon_texture = null
@@ -23,7 +23,11 @@ func apply_status(target):
 		queue_free()
 
 func get_description():
-	if turn_duration != 1:
+	if amount == null && turn_duration != 1:
+		return str(status_name, " (", turn_duration, " turns)")
+	elif amount == null && turn_duration == 1:
+		return str(status_name, " (", turn_duration, " turn)")
+	elif turn_duration != 1:
 		return str(status_name, " ", amount, " (", turn_duration, " turns)")
-	else:
+	elif turn_duration == 1:
 		return str(status_name, " ", amount, " (", turn_duration, " turn)")

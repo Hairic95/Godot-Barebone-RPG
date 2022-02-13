@@ -66,6 +66,18 @@ func is_ko():
 func set_current_hint(value):
 	$CurrentHint.visible = value
 
+func get_maximum_attack():
+	return max_attack
+func get_minimum_attack():
+	return min_attack
+func get_protection():
+	return protection
+func get_speed():
+	return speed
+
+func roll_attack_damage():
+	return randi()%(get_maximum_attack() - get_minimum_attack()) + get_minimum_attack()
+
 # Battle Effects
 
 # Let player reach negative health, so that you can heal them
