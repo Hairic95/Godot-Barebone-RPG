@@ -134,7 +134,7 @@ const action_data = {
 		"damage_percentage": 25,
 		"target": Constants.ActionTarget_EnemySingle,
 		"effects": [{
-			"name": "Bleed",
+			"name": "Poison",
 			"type": Constants.EffectType_Status,
 			"status": Constants.StatusType_Poison,
 			"amount": 4,
