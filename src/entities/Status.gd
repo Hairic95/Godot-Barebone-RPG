@@ -8,12 +8,12 @@ var turn_duration = 1
 
 var icon_texture = null
 
-func init(status_name, status_type, amount, turn_duration, icon_texture):
-	self.status_name = status_name
-	self.status_type = status_type
-	self.amount = amount
-	self.turn_duration = turn_duration
-	self.icon_texture = icon_texture
+func init(data):
+	self.status_name = data.status_name
+	self.status_type = data.status_type
+	self.amount = data.amount
+	self.turn_duration = data.turn_duration
+	self.icon_texture = data.icon_texture
 
 func apply_status(target):
 	

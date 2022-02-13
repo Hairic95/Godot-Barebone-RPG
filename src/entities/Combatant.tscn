@@ -10,6 +10,8 @@ script = ExtResource( 1 )
 
 [node name="Status" type="Node" parent="."]
 
+[node name="Buffs" type="Node" parent="."]
+
 [node name="Animations" type="Node2D" parent="."]
 
 [node name="CurrentHint" type="Sprite" parent="."]

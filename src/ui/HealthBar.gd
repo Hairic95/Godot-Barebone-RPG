@@ -1,6 +1,6 @@
 extends Control
 
-var status_icon_reference = load("res://src/ui/StatusIcon.tscn")
+var battle_icon_reference = load("res://src/ui/BattleIcon.tscn")
 
 var combatant = null
 
@@ -28,23 +28,29 @@ func _on_TextureProgress_value_changed(_value):
 func set_hp_display(current_hp, max_hp):
 	$HPCount.text = str(current_hp, "/", max_hp)
 
-func change_status():
-	# TODO Remove this: momentary fix
-	for child in $StatusList.get_children():
+func change_icons():
+	
+	for child in $IconList.get_children():
 		child.queue_free()
 	yield(get_tree().create_timer(.01), "timeout")
 	
+	# Update all buff icons
+	for buff in combatant.get_buffs():
+		# Remove status if duration is over
+		if buff.turn_duration == 0:
+			continue
+		var new_buff_icon = battle_icon_reference.instance()
+		new_buff_icon.init(buff.get_description(), buff.icon_texture)
+		$IconList.add_child(new_buff_icon)
+	
+	# Update all status icons
 	for status in combatant.get_status():
-		
 		# Remove status if duration is over
 		if status.turn_duration == 0:
 			continue
-		var new_status_icon = status_icon_reference.instance()
+		var new_status_icon = battle_icon_reference.instance()
 		new_status_icon.init(status.get_description(), status.icon_texture)
-		$StatusList.add_child(new_status_icon)
+		$IconList.add_child(new_status_icon)
+	
+	
 
-func get_status_icon(status):
-	for child in $StatusList.get_children():
-		if child.status_type == status.status_type:
-			return child
-	return null

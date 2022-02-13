@@ -156,6 +156,15 @@ const action_data = {
 	"basic_area_attack": {
 		"name": "Basic Area Attack",
 		"damage_percentage": 70,
-		"target": Constants.ActionTarget_EnemyMultiple
+		"target": Constants.ActionTarget_EnemyMultiple,
+		"effects": [{
+			"type": Constants.EffectType_Buff,
+			"buff_type": Constants.BuffType_Malus,
+			"buff_amount_type": Constants.BuffAmountType_Flat,
+			"stat_type": Constants.StatType_Protection,
+			"amount": -10,
+			"turn_duration": 3,
+			"icon": preload("res://assets/ui/status_icons/malus.png")
+		}]
 	}
 }

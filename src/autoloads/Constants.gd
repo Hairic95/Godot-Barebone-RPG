@@ -28,9 +28,20 @@ const ActionTarget_Self = "self"
 const EffectType_Status = "status"
 const EffectType_Heal = "heal"
 const EffectType_ClearStatus = "clear_status"
+const EffectType_Buff = "buff"
 
 # Status Types
-
 const StatusType_Bleed = "bleed"
 const StatusType_Poison = "poison"
 
+# Buff Types
+const BuffType_Buff = "buff"
+const BuffType_Malus = "malus"
+
+const BuffAmountType_Percentage = "percentage"
+const BuffAmountType_Flat = "flat"
+
+# Stat Types
+const StatType_Attack = "attack"
+const StatType_Protection = "protection"
+const StatType_Speed = "speed"

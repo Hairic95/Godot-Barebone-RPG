@@ -2,6 +2,7 @@ extends Node2D
 
 var action_reference = load("res://src/entities/Action.tscn")
 var status_reference = load("res://src/entities/Status.tscn")
+var buff_reference = load("res://src/entities/Buff.tscn")
 
 var combatant_name = "Missing string"
 
@@ -16,13 +17,11 @@ var speed = 1
 
 var player_id = ""
 
-var current_buffs = []
-var current_status = []
-
 var fixed_position = Vector2.ZERO
 
 signal combatant_hp_changed()
 signal status_changed()
+signal buffs_changed()
 
 func _ready():
 	randomize()
@@ -52,13 +51,16 @@ func init(data, starting_position):
 	global_position = starting_position
 
 func get_initiative():
-	return (randi()%6 + 1) + speed
+	return (randi()%6 + 1) + get_speed()
 
 func get_actions():
 	return $Actions.get_children()
 
 func get_status():
 	return $Status.get_children()
+
+func get_buffs():
+	return $Buffs.get_children()
 
 func is_ko():
 	return current_hp <= 0
@@ -67,13 +69,23 @@ func set_current_hint(value):
 	$CurrentHint.visible = value
 
 func get_maximum_attack():
-	return max_attack
+	return apply_buff(max_attack, Constants.StatType_Attack)
 func get_minimum_attack():
-	return min_attack
+	return apply_buff(min_attack, Constants.StatType_Attack)
 func get_protection():
-	return protection
+	return apply_buff(protection, Constants.StatType_Protection)
 func get_speed():
-	return speed
+	return apply_buff(speed, Constants.StatType_Speed)
+
+func apply_buff(starting_amount, stat_type):
+	var result = starting_amount
+	for buff in get_buffs():
+		if buff.stat_type == stat_type:
+			if buff.buff_amount_type == Constants.BuffAmountType_Flat:
+				result += buff.amount
+			elif buff.buff_amount_type == Constants.BuffAmountType_Percentage:
+				result += int(float(result) * float(buff.amount) / 100.0)
+	return result
 
 func roll_attack_damage():
 	return randi()%(get_maximum_attack() - get_minimum_attack()) + get_minimum_attack()
@@ -104,9 +116,9 @@ func heal_hp(amount):
 	EventBus.emit_signal("create_damage_label", amount, global_position + Vector2(0, -20), Color("2cb744"))
 	emit_signal("combatant_hp_changed", current_hp, max_hp)
 
-func add_status(status_name, status_type, amount, turn_duration, icon):
+func add_status(status_data):
 	var new_status = status_reference.instance()
-	new_status.init(status_name, status_type, amount, turn_duration, icon)
+	new_status.init(status_data)
 	$Status.add_child(new_status)
 	
 	emit_signal("status_changed")
@@ -116,6 +128,20 @@ func clear_status(status_type):
 		if status.status_type == status_type:
 			status.queue_free()
 	emit_signal("status_changed")
+
+func add_buff(buff_data):
+	var new_buff = buff_reference.instance()
+	new_buff.init(buff_data)
+	$Buffs.add_child(new_buff)
+	
+	emit_signal("buffs_changed")
+
+func consume_buffs():
+	for buff in $Buffs.get_children():
+		buff.consume()
+		yield(get_tree().create_timer(.01), "timeout")
+	
+	emit_signal("buffs_changed")
 
 func die():
 	EventBus.emit_signal("remove_combatant_from_queue", self)

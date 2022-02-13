@@ -106,6 +106,7 @@ func prepare_battle(player_team, enemy_team):
 		new_health_bar.init(new_combatant)
 		new_combatant.connect("combatant_hp_changed", self, "combatant_hp_changed", [new_health_bar])
 		new_combatant.connect("status_changed", self, "status_changed", [new_health_bar])
+		new_combatant.connect("buffs_changed", self, "buffs_changed", [new_health_bar])
 		$UI/PlayerHealthBars.add_child(new_health_bar)
 		
 		combatant_position_id += 1
@@ -123,6 +124,7 @@ func prepare_battle(player_team, enemy_team):
 		new_health_bar.init(new_combatant)
 		new_combatant.connect("combatant_hp_changed", self, "combatant_hp_changed", [new_health_bar])
 		new_combatant.connect("status_changed", self, "status_changed", [new_health_bar])
+		new_combatant.connect("buffs_changed", self, "buffs_changed", [new_health_bar])
 		$UI/EnemyHealthBars.add_child(new_health_bar)
 	
 	# Give the combatants references to the two players
@@ -336,6 +338,9 @@ func execute_action(acting_combatant, action, targets):
 		for effect in action.get_self_effects():
 			effect.apply_to_target(acting_combatant)
 	
+	if weakref(acting_combatant).get_ref():
+		acting_combatant.consume_buffs()
+	
 	# Check if the battle is over, otherwise go to the next combatant
 	if !is_battle_over():
 		yield(get_tree().create_timer(1.2), "timeout")
@@ -440,7 +445,10 @@ func combatant_hp_changed(current_hp, max_hp, health_bar):
 
 # Add or update a status icon on a health bar
 func status_changed(health_bar):
-	health_bar.change_status()
+	health_bar.change_icons()
+# Add or update a buff icon on a health bar
+func buffs_changed(health_bar):
+	health_bar.change_icons()
 
 # Removes a healthbar after the relative combatant has been ko-ed
 func remove_combatant_ui(combatant):
