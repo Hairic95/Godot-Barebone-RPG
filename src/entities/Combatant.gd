@@ -69,11 +69,11 @@ func set_current_hint(value):
 	$CurrentHint.visible = value
 
 func get_maximum_attack():
-	return apply_buff(max_attack, Constants.StatType_Attack)
+	return max(1, apply_buff(max_attack, Constants.StatType_Attack))
 func get_minimum_attack():
-	return apply_buff(min_attack, Constants.StatType_Attack)
+	return max(1, apply_buff(min_attack, Constants.StatType_Attack))
 func get_protection():
-	return apply_buff(protection, Constants.StatType_Protection)
+	return clamp(apply_buff(protection, Constants.StatType_Protection), 0, 99)
 func get_speed():
 	return apply_buff(speed, Constants.StatType_Speed)
 
