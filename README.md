@@ -1,6 +1,10 @@
 # Godot-Barebone-RPG
 A simple turn based RPG project structure
 
+# Guides
+
+Youtube videos: [Playlist](https://www.youtube.com/playlist?list=PLqDF2rXyx_-jmfmvTJ1oFQrY718UllbJY)
+
 # Licence
 
 The code of this project is under MIT licence
